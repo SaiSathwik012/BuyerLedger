@@ -7,7 +7,18 @@ const errorMiddleware = require("./middleware/error.middleware");
 
 const app = express();
 
-app.use(cors());
+// ✅ Proper CORS setup for production
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",          // local frontend
+            "https://buyerledger.onrender.com" // if frontend also hosted on Render
+        ],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true
+    })
+);
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
